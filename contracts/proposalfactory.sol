@@ -1,14 +1,15 @@
 pragma solidity >=0.4.22 <0.6.0;
+import "./voting.sol";
 
 // This contract handles the creation and mantaining of proposals.
 // Additional voting logic can be found in voting.sol.
-contract ProposalFactory{
+contract ProposalFactory is Voting{
     struct Proposal {
         string name;
         bool active;
         uint countVotes;
     }
-
+    uint proposalCost = 1;
     // An array containing all (active and inactive) proposals. The index represents
     // a basic ID of a specific proposal.
     Proposal[] public proposals;
@@ -18,16 +19,47 @@ contract ProposalFactory{
 
     // Mapping between name of proposal to the assigned ID.
     mapping (bytes32 => uint) public nameToId;
+    
+    // Returns the length of proposals.
+    function getProposalsLength() external view returns(uint){
+        return proposals.length;
+    }
+    
+    // Returns fields of specific proposal based on the index.
+    function getProposal(uint _index) external view returns(string, bool, uint) {
+        Proposal memory current = proposals[_index];
+        return (current.name, current.active, current.countVotes);
+    }
 
     // A proposal is created by choosing a name which will be mapped to a unique ID.
     // More fields could be added like a description. Note that any user may make use
     // of this function which is probably not desired. The next version would contain
     // some kind of authorisation functions.
     function createProposal(string memory _name) public {
+        Voter storage sender = addressToVoter[msg.sender];
+        require(sender.countVotes >= proposalCost);
+        _decreaseVotes(proposalCost);
         uint id = proposals.push(Proposal(_name, true, 0)) - 1;
         bytes32  conv = stringToBytes32(_name);
         nameToId[conv] = id;
     }
+    
+    // Sender chooses by name the proposal he'd like to vote for and and also chooses 
+    // the amount of votes.
+    function payVotes(string memory _name, uint _voteCount) public {
+        Voter storage sender = addressToVoter[msg.sender];
+        
+        require(_voteCount <= sender.countVotes);
+        
+        bytes32  conv = stringToBytes32(_name);
+        uint id = nameToId[conv];
+        Proposal storage curProposal = proposals[id];
+        
+        curProposal.countVotes += _voteCount;
+        sender.countVotes -= uint16(_voteCount);
+    }
+    
+    
 
     // Can be called to finish the voting. Returns the name of the"winner" with
     // the most votes and makes it inactive. We don't remove it from the array
@@ -77,7 +109,6 @@ contract ProposalFactory{
         uint result2 = curProposal.countVotes;
         return (result1, result2);
     }
-
 
     // Helper function. Converts strings to bytes32 in order to allow mapping.
     function stringToBytes32(string memory source) internal pure returns (bytes32 result) {
