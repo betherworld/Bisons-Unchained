@@ -21,6 +21,6 @@ The Web3 part can mainly be found in the [assets](BisonsUnchained/src/assets) fo
 But also spread out in the other parts of the website.
 
 ## Video
-Don't forget to watch our [Video](BisonsUnchained.mp4).
+Don't forget to watch our ![](BisonsUnchained.mp4).
 
 
