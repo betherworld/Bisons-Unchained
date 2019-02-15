@@ -3,7 +3,7 @@
 ## Demo
 An up and running demo page can be found on https://walon1998.github.io/BisonsUnchained \
 You need Metamask or a similar service with ETH and connect to the Rinkeby Testnetwork.\
-Username: hunter \
+Username: hunter  
 Password: hunter
 
 ## Contracts

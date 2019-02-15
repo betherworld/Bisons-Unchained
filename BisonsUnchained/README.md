@@ -1,8 +1,8 @@
 # BisonsUnchained
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1 \
-Hosted on: https://walon1998.github.io/BisonsUnchained
-Username: hunter \
+Hosted on: https://walon1998.github.io/BisonsUnchained  
+Username: hunter  
 Password: hunter
 
 ## Dependencies
