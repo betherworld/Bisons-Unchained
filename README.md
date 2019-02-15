@@ -18,9 +18,9 @@ There is also one compiled demo page in the [docs](BisonsUnchained/docs) folder.
 ## Web3
 
 The Web3 part can mainly be found in the [assets](BisonsUnchained/src/assets) folder.
-But also spread out in the other part of the website.
+But also spread out in the other parts of the website.
 
 ## Video
-Don't forget to watch out [Video](BisonsUnchained.mp4)
+Don't forget to watch our [Video](BisonsUnchained.mp4)
 
 
