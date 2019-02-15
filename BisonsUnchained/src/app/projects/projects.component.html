@@ -1,0 +1,73 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="!(isHandset$ | async)">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/hunter">My Tasks</a>
+      <a mat-list-item routerLink="/projects">Projects</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>BisonsUnchained: {{Tokencount}}</span>
+      <span class="example-spacer"></span>
+      <img style="height: 45px; text-align: right" src="assets/img/Shapes_colored_v4.svg"
+           alt="BisonsUnchainedLogo">
+      <!--<img style="height: 45px; text-align: right" src="../../assets/img/Shapes_colored_v4.svg"-->
+           <!--alt="BisonsUnchainedLogo">-->
+    </mat-toolbar>
+    <h1 class="mat-h1 title"> Community Projects</h1>
+    <div class="form">
+
+
+      <form [formGroup]="Message" #form class="form">
+        <mat-form-field>
+          <input matInput placeholder="Projectname" [formControl]="name" required type="text">
+          <mat-error *ngIf="name.invalid">{{'required'}}</mat-error>
+        </mat-form-field>
+        <button style="margin-left: 20px" mat-raised-button (click)="AddButton()" matTooltip="Commit"
+                matTooltipPosition="below"
+        >
+          Add
+        </button>
+      </form>
+    </div>
+
+    <div>
+      <table mat-table [dataSource]="Projects.data" class="at-elevation-z8 table">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Votes">
+          <th mat-header-cell *matHeaderCellDef> Votes</th>
+          <td mat-cell *matCellDef="let element"> {{element.voters}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="AddVote">
+          <th mat-header-cell *matHeaderCellDef> Add Vote</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon (tap)="TablePlusTapped(element.name)">add</mat-icon>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+    </div>
+
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

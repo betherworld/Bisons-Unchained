@@ -1,0 +1,41 @@
+<div class="login">
+
+
+  <form [formGroup]="Message" #form>
+
+    <div class="example-container">
+      <img style="height: 75px" src="assets/img/Shapes_colored_v4.svg" alt="BisonsUnchainedLogo">
+      <h1 class="mat-h1">Login
+      </h1>
+      <mat-form-field>
+        <input matInput placeholder="Username" [formControl]="name" required type="text">
+        <mat-error *ngIf="name.invalid">{{'required'}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Password" [formControl]="password" required type="password"
+               [type]="hide ? 'password' : 'text'">
+        <mat-icon class="password" matSuffix
+                  (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-error *ngIf="password.invalid">{{'required'}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="SendButton">
+
+      <button mat-raised-button (click)="login()" matTooltip="Login"
+              matTooltipPosition="below"
+      >
+        Login
+      </button>
+
+      <button style="margin-left: 10px" mat-raised-button (click)="Register()" matTooltip="Register"
+              matTooltipPosition="below"
+      >
+        Register
+      </button>
+
+
+    </div>
+  </form>
+</div>
